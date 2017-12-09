@@ -3,7 +3,7 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const mongoURI = require('./config/keys').mongoURI
+const { serverPort, mongoURI } = require('./config/keys')
 const app = express()
 
 // DB Setup
@@ -17,7 +17,6 @@ app.use(bodyParser.json({ type: '*/*' }))
 require('./routes/auth')(app)
 
 // Server setup
-const port = process.env.PORT || 3080
 const server = http.createServer(app)
-server.listen(port)
-console.log('Server listening on port', port)
+server.listen(serverPort)
+console.log('Server listening on port', serverPort)

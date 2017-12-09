@@ -1,8 +1,8 @@
 const passport = require('passport')
 const User = require('../models/user')
-const jwtSecret = require('../config/keys').jwtSecret
+const { jwtSecret } = require('../config/keys')
 const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
+const { ExtractJwt } = require('passport-jwt')
 const LocalStrategy = require('passport-local').Strategy
 
 // Setup options for Local Strategy
