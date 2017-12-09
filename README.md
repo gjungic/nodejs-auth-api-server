@@ -12,4 +12,4 @@ module.exports = {
 - start mongo db locally
 - to start the server, run `npm run dev`
 
-####happy coding :)
+#### happy coding :)
