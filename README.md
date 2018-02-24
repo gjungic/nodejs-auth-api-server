@@ -2,7 +2,7 @@
 
 How to start?
 - to install dependencies, run `npm install`
-- create `dev.js` file in `config` directory with the following content:
+- create `dev.js` file in `configuration` directory with the following content:
 ```
 module.exports = {
     serverPort: <your_server_port>,

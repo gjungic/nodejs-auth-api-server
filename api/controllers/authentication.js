@@ -1,12 +1,12 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('../config/keys')
+const { jwtSecret } = require('../configuration/keys')
 
-const tokenForUser = (user) => {
+const tokenForUser = (userId) => {
   // issued at time
   const iat = new Date().getTime()
 
-  return jwt.sign({ sub: user.id, iat }, jwtSecret)
+  return jwt.sign({ sub: userId, iat }, jwtSecret)
 }
 
 exports.signup = async (req, res) => {
@@ -17,13 +17,14 @@ exports.signup = async (req, res) => {
   try {
     const foundUser = await User.findOne({ email })
     if (foundUser) {
-      return res.status(422).end('Given email already exists!')
+      return res.status(409).json({ message: 'Given email already exists!' })
     }
 
     const userToSave = new User({ email, password })
-    const savedUser = await userToSave.save()
+    const { _id } = await userToSave.save()
 
-    res.status(201).send({ path: `/users/${savedUser._id}`, token: tokenForUser(savedUser) })
+    res.header('Path', `${req.URL}/users/${_id}`)
+    res.status(201).send({ token: tokenForUser(_id) })
   } catch (err) {
     return res.status(422).send(err)
   }

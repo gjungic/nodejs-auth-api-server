@@ -1,6 +1,6 @@
 const mongoose  = require('mongoose')
 const { Schema } = mongoose
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 
 // Define model
 const userSchema = new Schema({
@@ -8,7 +8,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
+    match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   },
   password: {
     type: String,
@@ -40,7 +41,4 @@ userSchema.methods.comparePassword = function(submittedPassword, callback) {
 }
 
 // Create model class
-const User = mongoose.model('user', userSchema)
-
-// Export model
-module.exports = User
+module.exports = mongoose.model('user', userSchema)
